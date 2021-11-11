@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface Api {
     @GET(BuildConfig.BASE_URL)
-    fun loadData() : Single<ServerResponse>
+    fun loadData(): Single<ServerResponse>
 }
