@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.R
 import dagger.android.support.DaggerFragment
@@ -24,6 +25,11 @@ class MainFragment: DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
+        viewModel.viewModelData.observe(this, Observer {
+            //do something on the UI
+        })
+
+        viewModel.loadData()
     }
 
 }

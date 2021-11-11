@@ -1,11 +1,10 @@
-package com.example.sampleappmvvm.data
+package com.example.sampleappmvvm.server
 
 import com.example.sampleappmvvm.BuildConfig
-import com.example.sampleappmvvm.model.Search
 import io.reactivex.Single
 import retrofit2.http.GET
 
 interface Api {
     @GET(BuildConfig.BASE_URL)
-    fun getSearch() : Single<Search>
+    fun loadData() : Single<ServerResponse>
 }

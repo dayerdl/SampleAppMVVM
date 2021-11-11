@@ -1,7 +1,7 @@
 package com.example.sampleappmvvm.di
 
-import com.example.sampleappmvvm.data.ApiManager
-import com.example.sampleappmvvm.data.Repository
+import com.example.sampleappmvvm.server.ApiManager
+import com.example.sampleappmvvm.domain.Repository
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

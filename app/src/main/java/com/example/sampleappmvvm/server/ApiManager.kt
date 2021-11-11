@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.data
+package com.example.sampleappmvvm.server
 
 import com.example.sampleappmvvm.BuildConfig
 import okhttp3.OkHttpClient
@@ -11,7 +11,6 @@ import javax.inject.Inject
 class ApiManager @Inject constructor() {
 
     fun provideApiManager(): Api {
-        val BASE_URL = BuildConfig.BASE_URL
         var retrofit: Retrofit? = null
         val interceptor = HttpLoggingInterceptor()
         interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
@@ -21,7 +20,7 @@ class ApiManager @Inject constructor() {
 
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
