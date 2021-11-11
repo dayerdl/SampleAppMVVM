@@ -22,10 +22,12 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
             repository.loadResponse()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { item ->
+                .subscribe({ item ->
                     println(item)
                     mutableLiveData.value = item
-                }
+                }, {
+                    println("Error loading data $it")
+                })
         )
     }
 
