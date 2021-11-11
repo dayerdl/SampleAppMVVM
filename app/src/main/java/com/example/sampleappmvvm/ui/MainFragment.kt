@@ -25,8 +25,9 @@ class MainFragment: DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
-        viewModel.viewModelData.observe(this, Observer {
+        viewModel.viewModelData.observe(this, {
             //do something on the UI
+            data -> println("The title of domain object is ${data.titleDomain}")
         })
 
         viewModel.loadData()
