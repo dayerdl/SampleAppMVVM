@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class ApiManager @Inject constructor() {
 
-    fun provideApiManager(): Api {
+    fun provideFutureApiManager(): FutureApi {
         val interceptor = HttpLoggingInterceptor()
         interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
         val client = OkHttpClient.Builder()
@@ -20,6 +20,6 @@ class ApiManager @Inject constructor() {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return retrofit.create(Api::class.java)
+        return retrofit.create(FutureApi::class.java)
     }
 }

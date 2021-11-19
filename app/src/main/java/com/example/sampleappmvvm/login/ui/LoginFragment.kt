@@ -1,21 +1,21 @@
-package com.example.sampleappmvvm.ui
+package com.example.sampleappmvvm.login.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.R
+import com.example.sampleappmvvm.login.LoginViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class MainFragment : DaggerFragment() {
+class LoginFragment: DaggerFragment() {
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     @Inject
-    lateinit var factory: MainViewModelProviderFactory
+    lateinit var factory: LoginViewModelProviderFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,13 +27,13 @@ class MainFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
-        viewModel.viewModelData.observe(this, { data ->
+        loginViewModel.viewModelData.observe(this, { data ->
             println("The title of domain object is ${data.titleDomain}")
         })
 
-        viewModel.loadData()
+        loginViewModel.loadData()
     }
 
 }
