@@ -30,7 +30,7 @@ class LoginFragment: DaggerFragment() {
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
         loginViewModel.viewModelData.observe(this, { data ->
-            println("The title of domain object is ${data.titleDomain}")
+
         })
 
         loginViewModel.loadData()

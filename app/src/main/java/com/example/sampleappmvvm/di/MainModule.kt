@@ -1,6 +1,6 @@
 package com.example.sampleappmvvm.di
 
-import com.example.sampleappmvvm.domain.Repository
+import com.example.sampleappmvvm.login.LoginRepository
 import com.example.sampleappmvvm.server.ApiManager
 import dagger.Module
 import dagger.Provides
@@ -9,8 +9,8 @@ import dagger.Provides
 class MainModule {
 
     @Provides
-    fun providePostRepository(apiManager: ApiManager): Repository {
-        return Repository(apiManager)
+    fun providePostRepository(apiManager: ApiManager): LoginRepository {
+        return LoginRepository(apiManager)
     }
 
     @Provides
