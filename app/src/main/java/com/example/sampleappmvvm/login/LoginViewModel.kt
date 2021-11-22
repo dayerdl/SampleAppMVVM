@@ -20,8 +20,9 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
                 val request = TokenRequest("code", "test","password")
                 val response = repository.loadResponse(request)
                 println("The token is ${response.access_token}")
-                val articles = repository.loadArticles(response.access_token)
-                println("number of articles is ${articles.size}")
+                //store in preferences
+//                val articles = repository.loadArticles(response.access_token)
+//                println("number of articles is ${articles.size}")
             } catch (e: Exception) {
                 println(e)
             }
