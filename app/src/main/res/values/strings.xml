@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SampleAppMVVM</string>
+    <string name="login_button">LOGIN</string>
 </resources>
