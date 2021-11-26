@@ -9,6 +9,9 @@ interface FutureApi {
 
     @POST("auth/token")
     suspend fun getToken(@Body request: TokenRequest): TokenResponse
+}
+
+interface FutureApiPrivate {
 
     @GET("api/v1/articles")
     suspend fun getArticles(@Header("Authorization") header: String): List<Article>

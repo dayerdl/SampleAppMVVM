@@ -1,6 +1,6 @@
 package com.example.sampleappmvvm.di
 
-import com.example.sampleappmvvm.articles.ArticlesListActivity
+import com.example.sampleappmvvm.articles.view.ArticlesListActivity
 import com.example.sampleappmvvm.login.ui.LoginActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

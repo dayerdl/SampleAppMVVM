@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.sampleappmvvm"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -95,7 +95,12 @@ dependencies {
     implementation 'androidx.compose.ui:ui-tooling:1.0.5'
     // Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    // Live data
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.1'
     // UI Tests
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
+
+    //Encryption
+    implementation 'androidx.security:security-crypto:1.0.0'
 
 }

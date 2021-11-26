@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articles.ui
+package com.example.sampleappmvvm.articles.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

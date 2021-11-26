@@ -1,12 +1,14 @@
-package com.example.sampleappmvvm.articles.ui
+package com.example.sampleappmvvm.articles.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,14 +16,37 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import com.example.sampleappmvvm.R
+import com.example.sampleappmvvm.articles.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.server.Article
 
 @Composable
-fun ArticlesList(articles: List<Article>) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        items(articles) { article ->
-            ArticleRow(article = article)
+fun ArticlesList(viewModel: ArticlesListViewModel) {
+    val state = viewModel.viewModelData.observeAsState()
+
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { Text(text = "Articles") },
+            actions = {
+                Icon(
+                    Icons.Filled.MoreVert, "more",
+                    modifier = Modifier.padding(end = 10.dp)
+                )
+            }
+        )
+    }) {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            state.value.let { content ->
+                when (content) {
+                    is ArticlesListViewModel.State.NoAuth -> {}
+                    is ArticlesListViewModel.State.Loaded -> {
+                        items(content.articles) { article ->
+                            ArticleRow(article = article)
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -53,7 +78,7 @@ fun ArticleRow(article: Article) {
                 Spacer(modifier = Modifier.height(25.dp))
             }
             Divider(
-                color = Color.Black,
+                color = Color.LightGray,
                 thickness = 1.dp,
                 modifier = Modifier.align(Alignment.BottomEnd)
             )
@@ -72,7 +97,13 @@ fun PreviewArticleRow() {
 @Preview
 @Composable
 fun PreviewArticles() {
-    ArticlesList(articles = getMockArticles())
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        for (index in 0..1) {
+            item {
+                ArticleRow(getMockArticles()[index])
+            }
+        }
+    }
 }
 
 fun getMockArticles(): List<Article> {

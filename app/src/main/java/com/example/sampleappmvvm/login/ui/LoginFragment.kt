@@ -1,9 +1,11 @@
 package com.example.sampleappmvvm.login.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.login.LoginViewModel
@@ -25,15 +27,16 @@ class LoginFragment: DaggerFragment() {
         return inflater.inflate(R.layout.main_fragment_layout, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
-        loginViewModel.viewModelData.observe(this, { data ->
+        loginViewModel.viewModelData.observe(viewLifecycleOwner, { data ->
 
         })
 
-        loginViewModel.loadData()
+        loginViewModel.loadData(requireContext())
     }
 
 }
