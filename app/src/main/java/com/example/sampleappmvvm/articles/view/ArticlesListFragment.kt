@@ -11,7 +11,7 @@ import com.example.sampleappmvvm.articles.viewmodel.ArticlesListViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class ArticlesListFragment: DaggerFragment() {
+class ArticlesListFragment : DaggerFragment() {
 
     private lateinit var viewModel: ArticlesListViewModel
 
@@ -22,7 +22,7 @@ class ArticlesListFragment: DaggerFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 ArticlesList(viewModel = viewModel)
