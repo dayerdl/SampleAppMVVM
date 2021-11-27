@@ -34,6 +34,10 @@ open class ArticlesListViewModel(
         mutableLiveData.value = State.ItemClick(article)
     }
 
+    fun logOut() {
+        authRepository.logOut()
+    }
+
     sealed class State {
         object NoAuth : State()
         class Loaded(val articles: List<Article>) : State()

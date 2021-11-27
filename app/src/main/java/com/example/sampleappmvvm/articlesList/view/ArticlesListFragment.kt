@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
 import com.example.sampleappmvvm.articlesList.di.ArticlesListViewModelProviderFactory
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
+import com.example.sampleappmvvm.login.ui.LoginActivity
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -27,9 +28,16 @@ class ArticlesListFragment : DaggerFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ArticlesList(viewModel = viewModel)
+                ArticlesList(viewModel = viewModel, logout())
             }
         }
+    }
+
+    private fun logout() : () -> Unit = {
+        viewModel.logOut()
+        activity?.finish()
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

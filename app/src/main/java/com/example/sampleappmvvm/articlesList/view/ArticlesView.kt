@@ -22,7 +22,7 @@ import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.server.Article
 
 @Composable
-fun ArticlesList(viewModel: ArticlesListViewModel) {
+fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
     val state = viewModel.viewModelData.observeAsState()
 
     Scaffold(topBar = {
@@ -30,8 +30,8 @@ fun ArticlesList(viewModel: ArticlesListViewModel) {
             title = { Text(text = "Articles") },
             actions = {
                 Icon(
-                    Icons.Filled.MoreVert, "more",
-                    modifier = Modifier.padding(end = 10.dp)
+                    Icons.Filled.MoreVert, "Log Out",
+                    modifier = Modifier.padding(end = 10.dp).clickable { logout }
                 )
             }
         )
