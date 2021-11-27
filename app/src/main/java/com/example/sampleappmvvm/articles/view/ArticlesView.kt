@@ -1,6 +1,7 @@
 package com.example.sampleappmvvm.articles.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,7 +43,7 @@ fun ArticlesList(viewModel: ArticlesListViewModel) {
                     is ArticlesListViewModel.State.NoAuth -> {}
                     is ArticlesListViewModel.State.Loaded -> {
                         items(content.articles) { article ->
-                            ArticleRow(article = article)
+                            ArticleRow(article = article, viewModel.itemClick(article))
                         }
                     }
                 }
@@ -52,12 +53,13 @@ fun ArticlesList(viewModel: ArticlesListViewModel) {
 }
 
 @Composable
-fun ArticleRow(article: Article) {
+fun ArticleRow(article: Article, itemClick: () -> Unit) {
     Row(
         Modifier
             .height(IntrinsicSize.Min)
             .width(IntrinsicSize.Max)
             .padding(start = 16.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
+            .clickable { itemClick }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -91,7 +93,7 @@ fun ArticleRow(article: Article) {
 @Preview
 @Composable
 fun PreviewArticleRow() {
-    ArticleRow(getMockArticles().first())
+    ArticleRow(getMockArticles().first()) {}
 }
 
 @Preview
@@ -100,7 +102,7 @@ fun PreviewArticles() {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         for (index in 0..1) {
             item {
-                ArticleRow(getMockArticles()[index])
+                ArticleRow(getMockArticles()[index]){}
             }
         }
     }

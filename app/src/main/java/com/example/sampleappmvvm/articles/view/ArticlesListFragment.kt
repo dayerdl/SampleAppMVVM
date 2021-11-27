@@ -1,5 +1,6 @@
 package com.example.sampleappmvvm.articles.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,5 +35,13 @@ class ArticlesListFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, factory)[ArticlesListViewModel::class.java]
         viewModel.loadArticles()
+
+        viewModel.viewModelData.observe(requireActivity(), { state ->
+            if (state is ArticlesListViewModel.State.ItemClick) {
+                val intent = Intent(requireContext(), ArticleDetailsActivity::class.java)
+                intent.apply { putExtra(ArticleDetailsActivity.ITEM_KEY, state.item.id) }
+                startActivity(intent)
+            }
+        })
     }
 }

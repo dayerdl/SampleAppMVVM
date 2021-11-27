@@ -2,7 +2,6 @@ package com.example.sampleappmvvm.server
 
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface FutureApi {
@@ -14,5 +13,8 @@ interface FutureApi {
 interface FutureApiPrivate {
 
     @GET("api/v1/articles")
-    suspend fun getArticles(@Header("Authorization") header: String): List<Article>
+    suspend fun getArticles(): List<Article>
+
+    @GET("api/v1/articles/id={article_id}")
+    suspend fun getArticleDetails(articleId: String): Article
 }
