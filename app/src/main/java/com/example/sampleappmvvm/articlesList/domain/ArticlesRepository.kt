@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articles.domain
+package com.example.sampleappmvvm.articlesList.domain
 
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.Article

@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".articles.view.ArticlesListActivity" android:exported="false"/>
+        <activity android:name=".articlesList.view.ArticlesListActivity" android:exported="false"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articles.view
+package com.example.sampleappmvvm.articlesList.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
-import com.example.sampleappmvvm.articles.di.ArticlesListViewModelProviderFactory
-import com.example.sampleappmvvm.articles.viewmodel.ArticlesListViewModel
+import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
+import com.example.sampleappmvvm.articlesList.di.ArticlesListViewModelProviderFactory
+import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 

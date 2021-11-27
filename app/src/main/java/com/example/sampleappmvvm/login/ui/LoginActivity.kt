@@ -3,7 +3,7 @@ package com.example.sampleappmvvm.login.ui
 import android.content.Intent
 import android.os.Bundle
 import com.example.sampleappmvvm.R
-import com.example.sampleappmvvm.articles.view.ArticlesListActivity
+import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.login.AuthRepository
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject

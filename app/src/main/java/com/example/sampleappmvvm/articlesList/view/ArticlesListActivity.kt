@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articles.view
+package com.example.sampleappmvvm.articlesList.view
 
 import android.os.Bundle
 import com.example.sampleappmvvm.R

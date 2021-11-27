@@ -1,9 +1,7 @@
 package com.example.sampleappmvvm.di
 
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
-import com.example.sampleappmvvm.SampleMVVMApplication
-import com.example.sampleappmvvm.articles.domain.ArticlesRepository
+import com.example.sampleappmvvm.articlesList.domain.ArticlesRepository
 import com.example.sampleappmvvm.login.AuthRepository
 import com.example.sampleappmvvm.server.ApiManager
 import dagger.Module

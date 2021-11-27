@@ -8,11 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.ViewModelProvider
-import com.example.sampleappmvvm.R
-import com.example.sampleappmvvm.articles.view.ArticlesList
-import com.example.sampleappmvvm.articles.view.ArticlesListActivity
+import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.login.LoginViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject

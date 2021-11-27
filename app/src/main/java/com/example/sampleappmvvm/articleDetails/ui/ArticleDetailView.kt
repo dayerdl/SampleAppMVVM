@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articles.view
+package com.example.sampleappmvvm.articlesList.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sampleappmvvm.R
+import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsViewModel
 import com.example.sampleappmvvm.server.Article
 
 @Composable
