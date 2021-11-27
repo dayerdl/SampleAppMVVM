@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sampleappmvvm.R
-import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsViewModel
+import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewModel
 import com.example.sampleappmvvm.server.Article
 
 @Composable

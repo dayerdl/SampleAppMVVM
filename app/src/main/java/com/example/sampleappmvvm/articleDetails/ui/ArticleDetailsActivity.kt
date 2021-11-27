@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.articleDetails.di.ArticleDetailsViewModelProviderFactory
+import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewModel
 import com.example.sampleappmvvm.articlesList.view.ArticleDetailView
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject

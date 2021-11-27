@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articleDetails.ui
+package com.example.sampleappmvvm.articleDetails.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
