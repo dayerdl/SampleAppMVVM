@@ -1,6 +1,7 @@
-package com.example.sampleappmvvm.articlesList.view
+package com.example.sampleappmvvm.articleDetails.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -23,16 +24,20 @@ import com.example.sampleappmvvm.server.Article
 @Composable
 fun ArticleDetailView(viewModel: ArticleDetailsViewModel) {
     val state = viewModel.viewModelData.observeAsState()
-
-    Scaffold(topBar = { TopBarArticleDetails() }) {
-        state.value?.let {
-            ArticleDetailsBody(it)
+    state.value?.let { it ->
+        val content = it as ArticleDetailsViewModel.State.Loaded
+        val article = content.details
+        Scaffold(topBar = { TopBarArticleDetails(viewModel.saveFavorite(article)) }) {
+            state.value?.let {
+                ArticleDetailsBody(it)
+            }
         }
     }
 }
 
 @Composable
-fun TopBarArticleDetails() {
+fun TopBarArticleDetails(saveFavorite: Unit) {
+
     TopAppBar(
         title = { Text(text = "Article Details") },
         navigationIcon = {
@@ -43,7 +48,9 @@ fun TopBarArticleDetails() {
         actions = {
             Icon(
                 Icons.Filled.Favorite, "fav",
-                modifier = Modifier.padding(end = 10.dp)
+                modifier = Modifier
+                    .padding(end = 10.dp)
+                    .clickable { saveFavorite }
             )
         }
     )
@@ -84,9 +91,9 @@ fun ArticleDetails(details: Article) {
 @Preview
 @Composable
 fun ArticleDetailPreview() {
-    Scaffold(topBar = { TopBarArticleDetails() }) {
+    Scaffold(topBar = { TopBarArticleDetails(Unit) }) {
         val detail = Article(title = "This is a tile", summary = getMockText(), date = "", id = 1,
-            thumbnail_template_url = "", thumbnail_url = "")
+            thumbnail_template_url = "", thumbnail_url = "", favourite = false)
         val mockDetails = ArticleDetailsViewModel.State.Loaded(detail)
         ArticleDetailsBody(mockDetails)
     }

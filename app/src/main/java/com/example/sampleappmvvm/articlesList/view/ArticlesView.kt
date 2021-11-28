@@ -115,7 +115,7 @@ fun getMockArticles(): List<Article> {
         summary = "Apps4Startups is an event for entrepreneurs to discuss, share, pitch and network, run by Future Workshops.",
         thumbnail_template_url = "https://miro.medium.com/fit/c/:width/:height/1*hFIdXmRlY278dzunhO5Mew.png",
         thumbnail_url = "https://miro.medium.com/fit/c/360/360/1*hFIdXmRlY278dzunhO5Mew.png",
-        title = "Speaking at Apps4Startups"
+        title = "Speaking at Apps4Startups", false
     )
     val article2 = Article(
         date = "2016-09-06",
@@ -123,7 +123,7 @@ fun getMockArticles(): List<Article> {
         summary = "Apple’s latest mobile releases — iOS 10 and watchOS 3 — provide clear opportunities to integrate Apps with the iPhone, iPad and Apple Watch at a fundamental level.",
         thumbnail_template_url = "https://miro.medium.com/fit/c/:width/:height/1*14aRtdZGuYj_VMVl9Mxcwg.jpeg",
         thumbnail_url = "https://miro.medium.com/fit/c/360/360/1*14aRtdZGuYj_VMVl9Mxcwg.jpeg",
-        title = "How Apps will evolve with iOS 10"
+        title = "How Apps will evolve with iOS 10", false
     )
     list.add(article1)
     list.add(article2)

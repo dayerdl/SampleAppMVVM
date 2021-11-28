@@ -7,7 +7,7 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentBuilder {
-    @ContributesAndroidInjector(modules = [MainModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindMainFragment(): LoginFragment
 
     @ContributesAndroidInjector(modules = [MainModule::class])
