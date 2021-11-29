@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 
 import com.example.sampleappmvvm.articlesList.domain.ArticlesRepository
 import com.example.sampleappmvvm.login.AuthRepository
-import com.example.sampleappmvvm.server.Article
+import com.example.sampleappmvvm.server.ArticleListItem
 import kotlinx.coroutines.launch
 
 open class ArticlesListViewModel(
@@ -29,7 +29,7 @@ open class ArticlesListViewModel(
         }
     }
 
-    fun itemClick(article: Article): () -> Unit = {
+    fun itemClick(article: ArticleListItem): () -> Unit = {
         println("article clicked ${article.id}")
         mutableLiveData.value = State.ItemClick(article)
     }
@@ -40,7 +40,7 @@ open class ArticlesListViewModel(
 
     sealed class State {
         object NoAuth : State()
-        class Loaded(val articles: List<Article>) : State()
-        class ItemClick(val item: Article): State()
+        class Loaded(val articles: List<ArticleListItem>) : State()
+        class ItemClick(val item: ArticleListItem): State()
     }
 }

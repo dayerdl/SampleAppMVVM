@@ -13,8 +13,8 @@ interface FutureApi {
 interface FutureApiPrivate {
 
     @GET("api/v1/articles")
-    suspend fun getArticles(): List<Article>
+    suspend fun getArticles(): List<ArticleListItem>
 
     @GET("api/v1/articles/id={article_id}")
-    suspend fun getArticleDetails(articleId: String): Article
+    suspend fun getArticleDetails(articleId: String): ArticleListItem
 }

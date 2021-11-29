@@ -8,7 +8,7 @@ import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
 import com.example.sampleappmvvm.login.AuthRepository
-import com.example.sampleappmvvm.server.Article
+import com.example.sampleappmvvm.server.ArticleListItem
 import kotlinx.coroutines.launch
 
 class ArticleDetailsViewModel(
@@ -36,16 +36,16 @@ class ArticleDetailsViewModel(
         }
     }
 
-    fun saveFavorite(article: Article) {
+    fun saveFavorite(articleListItem: ArticleListItem) {
         viewModelScope.launch {
-            val local = ArticleLocal(article.id, article.title)
+            val local = ArticleLocal(articleListItem.id, articleListItem.title)
             cache.saveFavourite(local)
         }
     }
 
     sealed class State {
         object NoAuth : State()
-        class Loaded(val details: Article) : State()
+        class Loaded(val details: ArticleListItem) : State()
     }
 
 }

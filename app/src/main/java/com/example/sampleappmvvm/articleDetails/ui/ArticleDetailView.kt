@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewModel
-import com.example.sampleappmvvm.server.Article
+import com.example.sampleappmvvm.server.ArticleListItem
 
 @Composable
 fun ArticleDetailView(viewModel: ArticleDetailsViewModel) {
@@ -68,7 +68,7 @@ fun ArticleDetailsBody(state: ArticleDetailsViewModel.State) {
 }
 
 @Composable
-fun ArticleDetails(details: Article) {
+fun ArticleDetails(details: ArticleListItem) {
     Column {
         Image(
             painter = painterResource(id = R.drawable.placeholder),
@@ -92,7 +92,7 @@ fun ArticleDetails(details: Article) {
 @Composable
 fun ArticleDetailPreview() {
     Scaffold(topBar = { TopBarArticleDetails(Unit) }) {
-        val detail = Article(title = "This is a tile", summary = getMockText(), date = "", id = 1,
+        val detail = ArticleListItem(title = "This is a tile", summary = getMockText(), date = "", id = 1,
             thumbnail_template_url = "", thumbnail_url = "", favourite = false)
         val mockDetails = ArticleDetailsViewModel.State.Loaded(detail)
         ArticleDetailsBody(mockDetails)

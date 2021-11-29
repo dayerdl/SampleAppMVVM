@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
-import com.example.sampleappmvvm.server.Article
+import com.example.sampleappmvvm.server.ArticleListItem
 
 @Composable
 fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
@@ -52,7 +52,7 @@ fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
 }
 
 @Composable
-fun ArticleRow(article: Article, itemClick: () -> Unit) {
+fun ArticleRow(article: ArticleListItem, itemClick: () -> Unit) {
     Row(
         Modifier
             .height(IntrinsicSize.Min)
@@ -107,9 +107,9 @@ fun PreviewArticles() {
     }
 }
 
-fun getMockArticles(): List<Article> {
-    val list = arrayListOf<Article>()
-    val article1 = Article(
+fun getMockArticles(): List<ArticleListItem> {
+    val list = arrayListOf<ArticleListItem>()
+    val article1 = ArticleListItem(
         date = "2019-05-15",
         id = 127,
         summary = "Apps4Startups is an event for entrepreneurs to discuss, share, pitch and network, run by Future Workshops.",
@@ -117,7 +117,7 @@ fun getMockArticles(): List<Article> {
         thumbnail_url = "https://miro.medium.com/fit/c/360/360/1*hFIdXmRlY278dzunhO5Mew.png",
         title = "Speaking at Apps4Startups", false
     )
-    val article2 = Article(
+    val article2 = ArticleListItem(
         date = "2016-09-06",
         id = 2143,
         summary = "Apple’s latest mobile releases — iOS 10 and watchOS 3 — provide clear opportunities to integrate Apps with the iPhone, iPad and Apple Watch at a fundamental level.",

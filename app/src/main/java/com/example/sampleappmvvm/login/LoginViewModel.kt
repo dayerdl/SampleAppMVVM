@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sampleappmvvm.server.Article
+import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.server.TokenRequest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
