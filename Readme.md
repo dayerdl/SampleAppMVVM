@@ -1,4 +1,4 @@
-# SampleAppMVVM
+# Future workshop - Code test
 
 Definition: Rest Client to display Articles from API of Future Workshop
 
