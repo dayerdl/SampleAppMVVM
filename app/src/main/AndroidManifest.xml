@@ -20,8 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".articlesList.view.ArticlesListActivity" android:exported="false"/>
-        <activity android:name=".articleDetails.ui.ArticleDetailsActivity" android:exported="false"/>
+        <activity android:name=".articlesList.view.ArticlesListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" android:exported="false"/>
+        <activity android:name=".articleDetails.ui.ArticleDetailsActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" android:exported="false"/>
     </application>
 
 </manifest>

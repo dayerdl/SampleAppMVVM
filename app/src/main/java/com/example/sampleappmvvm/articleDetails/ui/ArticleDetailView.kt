@@ -1,6 +1,5 @@
 package com.example.sampleappmvvm.articleDetails.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Light
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,10 +75,13 @@ fun ArticleDetails(details: ArticleDetails) {
         GlideImage(
             imageModel = details.image_url,
             // Crop, Fit, Inside, FillHeight, FillWidth, None
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
             // shows a placeholder ImageBitmap when loading.
             placeHolder = ImageBitmap.imageResource(R.drawable.placeholder),
-        )
+            modifier = Modifier
+                .height(200.dp)
+                .fillMaxWidth()
+            )
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = details.title, fontSize = 17.sp, fontWeight = Bold)
