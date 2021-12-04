@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -37,6 +38,16 @@ class ApiManager @Inject constructor() {
                 return chain.proceed(newRequest)
             }
         }
+//        val unauthorizedInterceptor = object : Interceptor {
+//            override fun intercept(chain: Interceptor.Chain): Response {
+//                val response = chain.proceed(chain.request())
+//                if (response.code === 401) {
+//
+//                }
+//                return response
+//            }
+//        }
+
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .addInterceptor(tokenInterceptor)
@@ -49,3 +60,4 @@ class ApiManager @Inject constructor() {
         return retrofit.create(FutureApiPrivate::class.java)
     }
 }
+

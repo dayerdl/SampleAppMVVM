@@ -10,10 +10,19 @@ import javax.inject.Inject
 
 class LoginActivity : DaggerAppCompatActivity() {
 
-    @Inject lateinit var authRepository: AuthRepository
+    @Inject
+    lateinit var authRepository: AuthRepository
+
+    companion object {
+        const val LOGOUT = "LOGOUT"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (intent.getBooleanExtra(LOGOUT, false)) {
+            authRepository.logOut()
+        }
 
         authRepository.getToken()?.let {
             val intent = Intent(this, ArticlesListActivity::class.java)

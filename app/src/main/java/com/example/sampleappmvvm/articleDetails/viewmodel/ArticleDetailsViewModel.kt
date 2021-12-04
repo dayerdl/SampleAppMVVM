@@ -7,8 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
+import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsModelView
+import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.login.AuthRepository
+import com.example.sampleappmvvm.server.ArticleDetails
 import com.example.sampleappmvvm.server.ArticleListItem
+import com.example.sampleappmvvm.server.NetworkErrors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ArticleDetailsViewModel(
@@ -19,16 +25,29 @@ class ArticleDetailsViewModel(
     private val mutableLiveData = MutableLiveData<State>()
     val viewModelData: LiveData<State> by lazy { mutableLiveData }
 
-    fun loadDetails(articleId: String) {
+    fun loadDetails(articleId: Int) {
         authRepository.getToken()?.let { token ->
-            viewModelScope.launch {
-                mutableLiveData.value =
-                    State.Loaded(
-                        repository.loadArticleDetails(
-                            articleId = articleId,
-                            token = token
-                        )
-                    )
+            viewModelScope.launch(Dispatchers.Main) {
+                val articleDetails = repository.loadArticleDetails(
+                    articleId = articleId,
+                    token = token
+                )
+                articleDetails.fold(onSuccess = {
+                    val favourite = repository.isArticleFavourite(it.id)
+                    val articleDetailsModelView = ArticleDetailsModelView(it, favourite)
+                    mutableLiveData.value =
+                        State.Loaded(articleDetailsModelView)
+                }, onFailure = {
+                    when (it) {
+                        is NetworkErrors.Unauthorized -> {
+                            mutableLiveData.value = State.NoAuth
+                        }
+                        else -> {
+                            println(it.localizedMessage)
+                        }
+                    }
+                })
+
             }
 
         } ?: run {
@@ -36,7 +55,7 @@ class ArticleDetailsViewModel(
         }
     }
 
-    fun saveFavorite(articleListItem: ArticleListItem) {
+    fun saveFavorite(articleListItem: ArticleDetails) {
         viewModelScope.launch {
             val local = ArticleLocal(articleListItem.id, articleListItem.title)
             cache.saveFavourite(local)
@@ -45,7 +64,7 @@ class ArticleDetailsViewModel(
 
     sealed class State {
         object NoAuth : State()
-        class Loaded(val details: ArticleListItem) : State()
+        class Loaded(val details: ArticleDetailsModelView) : State()
     }
 
 }

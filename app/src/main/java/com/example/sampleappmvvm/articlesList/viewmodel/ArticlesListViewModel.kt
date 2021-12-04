@@ -8,7 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.sampleappmvvm.articlesList.domain.ArticlesRepository
 import com.example.sampleappmvvm.login.AuthRepository
 import com.example.sampleappmvvm.server.ArticleListItem
+import com.example.sampleappmvvm.server.NetworkErrors
+import kotlinx.coroutines.handleCoroutineException
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import retrofit2.Response
+import java.lang.Exception
 
 open class ArticlesListViewModel(
     private val repository: ArticlesRepository,
@@ -21,7 +26,16 @@ open class ArticlesListViewModel(
     fun loadArticles() {
         authRepository.getToken()?.let {
             viewModelScope.launch {
-                mutableLiveData.value = State.Loaded(repository.loadArticles(it))
+                val result = repository.loadArticles(it)
+                result.fold(onSuccess = {
+                    mutableLiveData.value = State.Loaded(it)
+                }, onFailure = {
+                    when (it) {
+                        is NetworkErrors.Unauthorized -> {
+                            mutableLiveData.value = State.NoAuth
+                        }
+                    }
+                })
             }
 
         } ?: run {
@@ -41,6 +55,6 @@ open class ArticlesListViewModel(
     sealed class State {
         object NoAuth : State()
         class Loaded(val articles: List<ArticleListItem>) : State()
-        class ItemClick(val item: ArticleListItem): State()
+        class ItemClick(val item: ArticleListItem) : State()
     }
 }

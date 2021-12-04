@@ -37,5 +37,4 @@ class AuthRepository @Inject constructor(
             remove(KEY_TOKEN).commit()
         }
     }
-
 }

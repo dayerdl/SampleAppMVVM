@@ -23,7 +23,7 @@ class ArticleDetailsActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, factory)[ArticleDetailsViewModel::class.java]
 
-        intent.getStringExtra(ITEM_KEY)?.let { id ->
+        intent.extras?.getInt(ITEM_KEY)?.let { id ->
             setContent {
                 ArticleDetailView(viewModel)
             }

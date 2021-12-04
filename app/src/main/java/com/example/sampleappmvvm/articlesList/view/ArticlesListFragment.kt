@@ -11,6 +11,7 @@ import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
 import com.example.sampleappmvvm.articlesList.di.ArticlesListViewModelProviderFactory
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.login.ui.LoginActivity
+import com.example.sampleappmvvm.login.ui.LoginActivity.Companion.LOGOUT
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -33,11 +34,16 @@ class ArticlesListFragment : DaggerFragment() {
         }
     }
 
-    private fun logout() : () -> Unit = {
+    private fun logout(): () -> Unit = {
         viewModel.logOut()
         activity?.finish()
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadArticles()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +52,18 @@ class ArticlesListFragment : DaggerFragment() {
         viewModel.loadArticles()
 
         viewModel.viewModelData.observe(requireActivity(), { state ->
-            if (state is ArticlesListViewModel.State.ItemClick) {
-                val intent = Intent(requireContext(), ArticleDetailsActivity::class.java)
-                intent.apply { putExtra(ArticleDetailsActivity.ITEM_KEY, state.item.id) }
-                startActivity(intent)
+            when (state) {
+                is ArticlesListViewModel.State.ItemClick -> {
+                    val intent = Intent(requireContext(), ArticleDetailsActivity::class.java)
+                    intent.apply { putExtra(ArticleDetailsActivity.ITEM_KEY, state.item.id) }
+                    startActivity(intent)
+                }
+                is ArticlesListViewModel.State.NoAuth -> {
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.putExtra(LOGOUT, true)
+                    startActivity(intent)
+                }
+                is ArticlesListViewModel.State.Loaded -> {}
             }
         })
     }

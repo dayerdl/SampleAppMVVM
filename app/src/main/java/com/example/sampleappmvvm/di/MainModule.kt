@@ -7,6 +7,7 @@ import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
 import com.example.sampleappmvvm.articlesList.domain.ArticlesRepository
 import com.example.sampleappmvvm.login.AuthRepository
 import com.example.sampleappmvvm.server.ApiManager
+import com.example.sampleappmvvm.server.NetworkErrorHandler
 import dagger.Module
 import dagger.Provides
 
@@ -22,16 +23,17 @@ class MainModule {
     }
 
     @Provides
-    fun provideArticlesRepository(apiManager: ApiManager): ArticlesRepository {
-        return ArticlesRepository(apiManager)
+    fun provideArticlesRepository(apiManager: ApiManager, errorHandler: NetworkErrorHandler): ArticlesRepository {
+        return ArticlesRepository(apiManager, errorHandler)
     }
 
     @Provides
     fun provideArticleDetailsRepository(
         apiManager: ApiManager,
+        errorHandler: NetworkErrorHandler,
         cache: ArticlesCache
     ): ArticleDetailsRepository {
-        return ArticleDetailsRepository(apiManager, cache)
+        return ArticleDetailsRepository(apiManager, errorHandler, cache)
     }
 
     @Provides
@@ -42,5 +44,10 @@ class MainModule {
     @Provides
     fun provideHttpClient(): ApiManager {
         return ApiManager()
+    }
+
+    @Provides
+    fun provideNetworkErrorHandler(): NetworkErrorHandler {
+        return NetworkErrorHandler()
     }
 }

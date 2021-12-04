@@ -9,5 +9,4 @@ data class ArticleDetails(
     val summary: String,
     val thumbnail_template_url: String,
     val thumbnail_url: String,
-    val title: String
-)
+    val title: String)
