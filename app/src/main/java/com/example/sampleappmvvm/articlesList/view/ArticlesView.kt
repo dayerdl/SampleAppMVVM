@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +24,7 @@ import com.example.sampleappmvvm.server.ArticleListItem
 @Composable
 fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
     val state = viewModel.viewModelData.observeAsState()
+    var showMenu by remember { mutableStateOf(false) }
 
     Scaffold(topBar = {
         TopAppBar(
@@ -31,8 +32,17 @@ fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
             actions = {
                 Icon(
                     Icons.Filled.MoreVert, "Log Out",
-                    modifier = Modifier.padding(end = 10.dp).clickable { logout }
+                    modifier = Modifier.padding(end = 10.dp).clickable { showMenu = !showMenu }
                 )
+
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+                    DropdownMenuItem(onClick = { logout() }) {
+                        Text(text = "Log out")
+                    }
+                }
             }
         )
     }) {

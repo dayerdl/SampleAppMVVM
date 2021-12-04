@@ -6,10 +6,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
@@ -23,39 +25,63 @@ import com.example.sampleappmvvm.server.ArticleDetails
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun ArticleDetailView(viewModel: ArticleDetailsViewModel) {
+fun ArticleDetailView(viewModel: ArticleDetailsViewModel, backHandler: () -> Unit) {
     val state = viewModel.viewModelData.observeAsState()
-    state.value?.let { it ->
-        val content = it as ArticleDetailsViewModel.State.Loaded
+    state.value?.let { state ->
+        val content = state as ArticleDetailsViewModel.State.Loaded
         val article = content.details.articleDetails
-        Scaffold(topBar = { TopBarArticleDetails(viewModel.saveFavorite(article)) }) {
-            state.value?.let {
-                ArticleDetailsBody(it)
-            }
+        Scaffold(topBar = {
+            TopBarArticleDetails(
+                state,
+                { viewModel.saveFavorite(article) },
+                backHandler
+            )
+        }) {
+            ArticleDetailsBody(state)
         }
     }
 }
 
 @Composable
-fun TopBarArticleDetails(saveFavorite: Unit) {
+fun TopBarArticleDetails(
+    state: ArticleDetailsViewModel.State,
+    saveFavorite: () -> Unit,
+    backHandler: () -> Unit
+) {
 
     TopAppBar(
         title = { Text(text = "Article Details") },
         navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = { backHandler() }) {
                 Icon(Icons.Filled.ArrowBack, "backIcon")
             }
         },
         actions = {
             Icon(
-                Icons.Filled.Favorite, "fav",
+                getIcon(state), "fav",
                 modifier = Modifier
                     .padding(end = 10.dp)
-                    .clickable { saveFavorite }
+                    .clickable { saveFavorite() }
             )
         }
     )
 }
+
+fun getIcon(state: ArticleDetailsViewModel.State): ImageVector {
+    state.let { content ->
+        return when (content) {
+            is ArticleDetailsViewModel.State.Loaded -> {
+                if (content.details.favourite) {
+                    Icons.Filled.Favorite
+                } else {
+                    Icons.Filled.FavoriteBorder
+                }
+            }
+            else -> Icons.Filled.FavoriteBorder
+        }
+    }
+}
+
 
 @Composable
 fun ArticleDetailsBody(state: ArticleDetailsViewModel.State) {
@@ -81,7 +107,7 @@ fun ArticleDetails(details: ArticleDetails) {
             modifier = Modifier
                 .height(200.dp)
                 .fillMaxWidth()
-            )
+        )
         Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = details.title, fontSize = 17.sp, fontWeight = Bold)
@@ -95,7 +121,7 @@ fun ArticleDetails(details: ArticleDetails) {
 @Preview
 @Composable
 fun ArticleDetailPreview() {
-    Scaffold(topBar = { TopBarArticleDetails(Unit) }) {
+    Scaffold(topBar = { TopBarArticleDetails(ArticleDetailsViewModel.State.NoAuth, { }, { }) }) {
         val detail = ArticleDetails(
             title = "This is a tile",
             summary = getMockText(),

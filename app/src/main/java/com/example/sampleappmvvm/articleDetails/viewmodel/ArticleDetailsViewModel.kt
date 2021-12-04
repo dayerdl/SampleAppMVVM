@@ -8,13 +8,10 @@ import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsModelView
-import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.login.AuthRepository
 import com.example.sampleappmvvm.server.ArticleDetails
-import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.server.NetworkErrors
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ArticleDetailsViewModel(
@@ -58,7 +55,14 @@ class ArticleDetailsViewModel(
     fun saveFavorite(articleListItem: ArticleDetails) {
         viewModelScope.launch {
             val local = ArticleLocal(articleListItem.id, articleListItem.title)
-            cache.saveFavourite(local)
+            val isFavourite = cache.isArticleFavourite(articleId = articleListItem.id)
+            if (isFavourite) {
+                cache.deleteFavourite(local)
+            } else {
+                cache.saveFavourite(local)
+            }
+            val article = ArticleDetailsModelView(articleListItem, !isFavourite)
+            mutableLiveData.value = State.Loaded(article)
         }
     }
 
