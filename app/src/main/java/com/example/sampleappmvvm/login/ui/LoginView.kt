@@ -7,7 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +26,7 @@ import com.example.sampleappmvvm.R
 
 
 @Composable
-fun LoginScreen(onClick: () -> Unit) {
+fun LoginScreen(getToken: (String, String) -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.background(color = colorResource(id = R.color.white))
@@ -34,36 +36,39 @@ fun LoginScreen(onClick: () -> Unit) {
             contentDescription = "Login background", modifier = Modifier.fillMaxWidth()
         )
         Divider(Modifier.size(Dp(0f), Dp(16f)))
-        credentials()
-        Divider(Modifier.size(Dp(0f), Dp(16f)))
-        Text(
-            text = "LOGIN", color = Color(R.color.white),
-            modifier = Modifier.clickable(onClick = onClick)
-        )
+        credentials(getToken)
     }
 }
 
 @Composable
-fun credentials() {
-    inputBox("Name")
-    Divider(Modifier.size(Dp(0f), Dp(10f)))
-    inputBox("Password")
-}
-
-@Composable
-fun inputBox(title: String) {
-    var text by rememberSaveable { mutableStateOf("") }
-
+fun credentials(getToken: (String, String) -> Unit) {
+    var user by rememberSaveable { mutableStateOf("code") }
+    var password by rememberSaveable { mutableStateOf("test") }
     TextField(
-        value = text,
-        onValueChange = { text = it },
-        label = { Text(title) },
+        value = user,
+        onValueChange = { user = it },
+        label = { Text("Username") },
         singleLine = true
     )
+    Divider(Modifier.size(Dp(0f), Dp(10f)))
+    TextField(
+        value = password,
+        onValueChange = { password = it },
+        label = { Text("Password") },
+        singleLine = true
+    )
+    Divider(Modifier.size(Dp(0f), Dp(16f)))
+    Text(
+        text = "LOGIN", color = Color(R.color.white),
+        modifier = Modifier.clickable(onClick = { getToken(user, password) })
+    )
 }
+
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun loginScreenPreview() {
-    LoginScreen {}
+    LoginScreen(getToken = ::getToken)
 }
+
+fun getToken(user: String, pass: String) {}

@@ -28,7 +28,7 @@ class LoginFragment : DaggerFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginScreen { loginViewModel.getToken() }
+                LoginScreen(loginViewModel::getToken)
             }
         }
     }
