@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsModelView
-import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.ArticleDetails
 import com.example.sampleappmvvm.server.NetworkErrors
