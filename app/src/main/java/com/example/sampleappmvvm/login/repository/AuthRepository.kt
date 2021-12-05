@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.login
+package com.example.sampleappmvvm.login.repository
 
 import android.content.SharedPreferences
 import android.os.Build

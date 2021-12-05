@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.NetworkErrors
 import com.example.sampleappmvvm.server.TokenRequest
 import kotlinx.coroutines.launch
@@ -18,9 +19,10 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
     val viewModelData: LiveData<State> by lazy { mutableLiveData }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun getToken(user: String, password: String) {
+    fun onLoginClicked(user: String, password: String) {
         viewModelScope.launch {
             try {
+                mutableLiveData.value = State.Loading
                 val request = TokenRequest(user, password,"password")
                 val response = repository.generateToken(request)
                 response.fold(onSuccess = {
@@ -48,5 +50,6 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
         object TokenStored : State()
         object IncorrectCredentials : State()
         object TechnicalError : State()
+        object Loading: State()
     }
 }

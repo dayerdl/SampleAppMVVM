@@ -2,6 +2,8 @@ package com.example.sampleappmvvm.articleDetails.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -97,23 +99,28 @@ fun ArticleDetailsBody(state: ArticleDetailsViewModel.State) {
 
 @Composable
 fun ArticleDetails(details: ArticleDetails) {
-    Column {
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier.verticalScroll(state = scrollState, enabled = true)) {
         GlideImage(
             imageModel = details.image_url,
-            // Crop, Fit, Inside, FillHeight, FillWidth, None
             contentScale = ContentScale.FillBounds,
-            // shows a placeholder ImageBitmap when loading.
             placeHolder = ImageBitmap.imageResource(R.drawable.placeholder),
             modifier = Modifier
                 .height(200.dp)
                 .fillMaxWidth()
         )
-        Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp)
+        ) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = details.title, fontSize = 17.sp, fontWeight = Bold)
-            Text(text = "TODO when BE is up", fontSize = 13.sp, fontWeight = Light)
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = details.summary, fontSize = 13.sp, fontWeight = Light)
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = details.summary, fontSize = 13.sp)
+            Text(text = details.content, fontSize = 13.sp)
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -140,7 +147,15 @@ fun ArticleDetailPreview() {
 }
 
 fun getMockText(): String {
-    return "asld asldkmasldmka l akmdlakmdlakmsdlakmsd alkdm laksdm lamdlkamldk malsdk malskdmlaks" +
-            "kansdkjasndkasndkjanskdjnaksdjnkasjndkajnsdkjasnkdjanskdjanskjdna" +
-            "askdjnaskjndkasjnkdjansdkjasndkjanskdjnsadk;jnaskdjnaskjdn"
+    return "Future Workshops has over a decade of experience building Apps and Platforms for " +
+            "millions of people worldwide. We want to share our knowledge, connections and " +
+            "expertise to help entrepreneurs grow their ideas and companies — so we started a " +
+            "regular meetup which is open to everyone and includes pizza!\nOur meetup thrives" +
+            " on the startups and speakers who have shared their inspirational stories. " +
+            "In return, previous attendees found investment leads, business opportunities, " +
+            "new sales, and received technical advice.\n— — — — — — — — — — — — — — — — — " +
+            "— — — — — — — — — — — — —\nWe want you to succeed\nOur goal is to help you, " +
+            "the startups. We want you to be direct, and tell us how we can help. For example, " +
+            "you may be looking for investment, need focussed advice on how to conduct user" +
+            " research, or want to go over your prototype or elevator pitch."
 }

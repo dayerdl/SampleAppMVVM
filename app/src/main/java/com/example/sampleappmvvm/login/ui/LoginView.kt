@@ -26,7 +26,7 @@ import com.example.sampleappmvvm.R
 
 
 @Composable
-fun LoginScreen(getToken: (String, String) -> Unit) {
+fun LoginScreen(onLoginClicked: (String, String) -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.background(color = colorResource(id = R.color.white))
@@ -36,12 +36,12 @@ fun LoginScreen(getToken: (String, String) -> Unit) {
             contentDescription = "Login background", modifier = Modifier.fillMaxWidth()
         )
         Divider(Modifier.size(Dp(0f), Dp(16f)))
-        credentials(getToken)
+        credentials(onLoginClicked)
     }
 }
 
 @Composable
-fun credentials(getToken: (String, String) -> Unit) {
+fun credentials(onLoginClicked: (String, String) -> Unit) {
     var user by rememberSaveable { mutableStateOf("code") }
     var password by rememberSaveable { mutableStateOf("test") }
     TextField(
@@ -60,7 +60,7 @@ fun credentials(getToken: (String, String) -> Unit) {
     Divider(Modifier.size(Dp(0f), Dp(16f)))
     Text(
         text = "LOGIN", color = Color(R.color.white),
-        modifier = Modifier.clickable(onClick = { getToken(user, password) })
+        modifier = Modifier.clickable(onClick = { onLoginClicked(user, password) })
     )
 }
 
@@ -68,7 +68,7 @@ fun credentials(getToken: (String, String) -> Unit) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun loginScreenPreview() {
-    LoginScreen(getToken = ::getToken)
+    LoginScreen(onLoginClicked = ::getToken)
 }
 
 fun getToken(user: String, pass: String) {}

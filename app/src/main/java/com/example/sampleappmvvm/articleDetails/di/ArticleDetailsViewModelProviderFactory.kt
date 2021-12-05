@@ -2,9 +2,9 @@ package com.example.sampleappmvvm.articleDetails.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
+import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
 import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewModel
-import com.example.sampleappmvvm.login.AuthRepository
+import com.example.sampleappmvvm.login.repository.AuthRepository
 import javax.inject.Inject
 
 class ArticleDetailsViewModelProviderFactory @Inject constructor(

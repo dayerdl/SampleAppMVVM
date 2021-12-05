@@ -29,7 +29,7 @@ class LoginFragment : DaggerFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginScreen(loginViewModel::getToken)
+                LoginScreen(loginViewModel::onLoginClicked)
             }
         }
     }
@@ -44,6 +44,7 @@ class LoginFragment : DaggerFragment() {
                 LoginViewModel.State.TokenStored -> {
                     val intent = Intent(requireContext(), ArticlesListActivity::class.java)
                     startActivity(intent)
+                    requireActivity().finish()
                 }
                 LoginViewModel.State.IncorrectCredentials -> Toast.makeText(
                     requireContext(),

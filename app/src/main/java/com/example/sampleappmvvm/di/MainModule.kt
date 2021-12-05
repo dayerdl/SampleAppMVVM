@@ -3,9 +3,9 @@ package com.example.sampleappmvvm.di
 import android.app.Application
 import android.content.SharedPreferences
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
-import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
-import com.example.sampleappmvvm.articlesList.domain.ArticlesRepository
-import com.example.sampleappmvvm.login.AuthRepository
+import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
+import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
+import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.NetworkErrorHandler
 import dagger.Module

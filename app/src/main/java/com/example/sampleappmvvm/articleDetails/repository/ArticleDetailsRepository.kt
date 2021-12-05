@@ -1,4 +1,4 @@
-package com.example.sampleappmvvm.articleDetails.domain
+package com.example.sampleappmvvm.articleDetails.repository
 
 import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
