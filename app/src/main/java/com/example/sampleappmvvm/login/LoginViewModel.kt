@@ -1,11 +1,14 @@
 package com.example.sampleappmvvm.login
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
+import com.example.sampleappmvvm.server.NetworkErrors
 import com.example.sampleappmvvm.server.TokenRequest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,10 +25,21 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
             try {
                 val request = TokenRequest(user, password,"password")
                 val response = repository.generateToken(request)
-                println("The token is ${response.access_token}")
-                repository.storeToken(token = response.access_token)
-                println("store token ${response.access_token}, saved = ${repository.getToken()}")
-                mutableLiveData.value = State.TokenStored
+                response.fold(onSuccess = {
+                    repository.storeToken(token = it.access_token)
+                    mutableLiveData.value = State.TokenStored
+                }, onFailure = {
+                    when (it) {
+                        is NetworkErrors.IncorrectCredentials -> {
+                            mutableLiveData.value = State.IncorrectCredentials
+                        }
+                        else -> {
+                            mutableLiveData.value = State.IncorrectCredentials
+                        }
+                    }
+
+                })
+
             } catch (e: Exception) {
                 println(e)
             }
@@ -34,5 +48,7 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
 
     sealed class State {
         object TokenStored : State()
+        object IncorrectCredentials : State()
+        object TechnicalError : State()
     }
 }

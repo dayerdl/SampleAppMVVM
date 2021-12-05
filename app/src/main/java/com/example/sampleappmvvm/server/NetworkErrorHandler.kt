@@ -7,8 +7,9 @@ class NetworkErrorHandler {
     fun handleError(it: Throwable): Throwable {
         when (it) {
             is HttpException -> {
-                if (it.code() == 401) {
-                    return NetworkErrors.Unauthorized
+                when (it.code()) {
+                    401 -> return NetworkErrors.Unauthorized
+                    403 -> return NetworkErrors.IncorrectCredentials
                 }
             }
         }
@@ -17,5 +18,6 @@ class NetworkErrorHandler {
 }
 
 sealed class NetworkErrors {
-    object Unauthorized: Throwable()
+    object Unauthorized : Throwable()
+    object IncorrectCredentials : Throwable()
 }

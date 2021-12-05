@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
@@ -44,6 +45,16 @@ class LoginFragment : DaggerFragment() {
                     val intent = Intent(requireContext(), ArticlesListActivity::class.java)
                     startActivity(intent)
                 }
+                LoginViewModel.State.IncorrectCredentials -> Toast.makeText(
+                    requireContext(),
+                    "Incorrect username and password",
+                    Toast.LENGTH_LONG
+                ).show()
+                LoginViewModel.State.TechnicalError -> Toast.makeText(
+                    requireContext(),
+                    "There is technical problem, please contact technical support",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
 

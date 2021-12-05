@@ -17,13 +17,17 @@ class MainModule {
     @Provides
     fun providePostRepository(
         apiManager: ApiManager,
-        preferences: SharedPreferences
+        preferences: SharedPreferences,
+        errorHandler: NetworkErrorHandler
     ): AuthRepository {
-        return AuthRepository(apiManager, preferences)
+        return AuthRepository(apiManager, preferences, errorHandler)
     }
 
     @Provides
-    fun provideArticlesRepository(apiManager: ApiManager, errorHandler: NetworkErrorHandler): ArticlesRepository {
+    fun provideArticlesRepository(
+        apiManager: ApiManager,
+        errorHandler: NetworkErrorHandler
+    ): ArticlesRepository {
         return ArticlesRepository(apiManager, errorHandler)
     }
 
@@ -44,10 +48,5 @@ class MainModule {
     @Provides
     fun provideHttpClient(): ApiManager {
         return ApiManager()
-    }
-
-    @Provides
-    fun provideNetworkErrorHandler(): NetworkErrorHandler {
-        return NetworkErrorHandler()
     }
 }
