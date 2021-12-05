@@ -21,33 +21,40 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Light
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewModel
 import com.example.sampleappmvvm.server.ArticleDetails
+import com.example.sampleappmvvm.views.CircularProgressBar
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun ArticleDetailView(viewModel: ArticleDetailsViewModel, backHandler: () -> Unit) {
-    val state = viewModel.viewModelData.observeAsState()
-    state.value?.let { state ->
-        val content = state as ArticleDetailsViewModel.State.Loaded
-        val article = content.details.articleDetails
-        Scaffold(topBar = {
-            TopBarArticleDetails(
-                state,
-                { viewModel.saveFavorite(article) },
-                backHandler
-            )
-        }) {
-            ArticleDetailsBody(state)
+fun ArticleDetailView(
+    state: LiveData<ArticleDetailsViewModel.State>, backHandler: () -> Unit,
+    onClickFavourite: (ArticleDetails) -> Unit
+) {
+    val state = state.observeAsState()
+    when (state.value) {
+        is ArticleDetailsViewModel.State.Loaded -> {
+            val content = state.value as ArticleDetailsViewModel.State.Loaded
+            Scaffold(topBar = {
+                TopBarArticleDetails(
+                    content.details,
+                    onClickFavourite,
+                    backHandler
+                )
+            }) {
+                ArticleDetailsBody(content)
+            }
         }
+        ArticleDetailsViewModel.State.Loading -> CircularProgressBar()
     }
 }
 
 @Composable
 fun TopBarArticleDetails(
-    state: ArticleDetailsViewModel.State,
-    saveFavorite: () -> Unit,
+    details: ArticleDetailsModelView,
+    saveFavorite: (ArticleDetails) -> Unit,
     backHandler: () -> Unit
 ) {
 
@@ -60,27 +67,20 @@ fun TopBarArticleDetails(
         },
         actions = {
             Icon(
-                getIcon(state), "fav",
+                getIcon(details), "fav",
                 modifier = Modifier
                     .padding(end = 10.dp)
-                    .clickable { saveFavorite() }
+                    .clickable { saveFavorite(details.articleDetails) }
             )
         }
     )
 }
 
-fun getIcon(state: ArticleDetailsViewModel.State): ImageVector {
-    state.let { content ->
-        return when (content) {
-            is ArticleDetailsViewModel.State.Loaded -> {
-                if (content.details.favourite) {
-                    Icons.Filled.Favorite
-                } else {
-                    Icons.Filled.FavoriteBorder
-                }
-            }
-            else -> Icons.Filled.FavoriteBorder
-        }
+fun getIcon(details: ArticleDetailsModelView): ImageVector {
+    return if (details.favourite) {
+        Icons.Filled.Favorite
+    } else {
+        Icons.Filled.FavoriteBorder
     }
 }
 
@@ -128,22 +128,22 @@ fun ArticleDetails(details: ArticleDetails) {
 @Preview
 @Composable
 fun ArticleDetailPreview() {
-    Scaffold(topBar = { TopBarArticleDetails(ArticleDetailsViewModel.State.NoAuth, { }, { }) }) {
-        val detail = ArticleDetails(
-            title = "This is a tile",
-            summary = getMockText(),
-            date = "",
-            id = 1,
-            thumbnail_template_url = "",
-            thumbnail_url = "",
-            content = "",
-            image_url = "",
-            source_url = ""
-        )
-        val mockDetails =
-            ArticleDetailsViewModel.State.Loaded(ArticleDetailsModelView(detail, false))
-        ArticleDetailsBody(mockDetails)
-    }
+    val detail = ArticleDetails(
+        title = "This is a tile",
+        summary = getMockText(),
+        date = "",
+        id = 1,
+        thumbnail_template_url = "",
+        thumbnail_url = "",
+        content = "",
+        image_url = "",
+        source_url = ""
+    )
+
+    val mockDetails =
+        ArticleDetailsViewModel.State.Loaded(ArticleDetailsModelView(detail, false))
+    ArticleDetailsBody(mockDetails)
+
 }
 
 fun getMockText(): String {

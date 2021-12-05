@@ -17,13 +17,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.server.ArticleListItem
+import com.example.sampleappmvvm.views.CircularProgressBar
 
 @Composable
-fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
-    val state = viewModel.viewModelData.observeAsState()
+fun ArticlesList(
+    state: LiveData<ArticlesListViewModel.State>,
+    logout: () -> Unit,
+    itemClick: (ArticleListItem) -> Unit
+) {
+    val state = state.observeAsState()
     var showMenu by remember { mutableStateOf(false) }
 
     Scaffold(topBar = {
@@ -32,7 +38,9 @@ fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
             actions = {
                 Icon(
                     Icons.Filled.MoreVert, "Log Out",
-                    modifier = Modifier.padding(end = 10.dp).clickable { showMenu = !showMenu }
+                    modifier = Modifier
+                        .padding(end = 10.dp)
+                        .clickable { showMenu = !showMenu }
                 )
 
                 DropdownMenu(
@@ -46,18 +54,21 @@ fun ArticlesList(viewModel: ArticlesListViewModel, logout: () -> Unit) {
             }
         )
     }) {
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            state.value.let { content ->
-                when (content) {
-                    is ArticlesListViewModel.State.NoAuth -> {}
-                    is ArticlesListViewModel.State.Loaded -> {
-                        items(content.articles) { article ->
-                            ArticleRow(article = article, viewModel.itemClick(article))
-                        }
-                    }
-                    else -> {}
-                }
+        when (state.value) {
+            is ArticlesListViewModel.State.Loaded -> {
+                val articles = (state.value as ArticlesListViewModel.State.Loaded).articles
+                ListOfArticles(articles = articles, itemClick)
             }
+            is ArticlesListViewModel.State.Loading -> CircularProgressBar()
+        }
+    }
+}
+
+@Composable
+fun ListOfArticles(articles: List<ArticleListItem>, onItemClicked: (ArticleListItem) -> Unit) {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        items(articles) { article ->
+            ArticleRow(article = article) { onItemClicked(article) }
         }
     }
 }
@@ -96,8 +107,6 @@ fun ArticleRow(article: ArticleListItem, itemClick: () -> Unit) {
             )
         }
     }
-
-
 }
 
 @Preview
@@ -112,7 +121,7 @@ fun PreviewArticles() {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         for (index in 0..1) {
             item {
-                ArticleRow(getMockArticles()[index]){}
+                ArticleRow(getMockArticles()[index]) {}
             }
         }
     }
@@ -140,3 +149,4 @@ fun getMockArticles(): List<ArticleListItem> {
     list.add(article2)
     return list
 }
+

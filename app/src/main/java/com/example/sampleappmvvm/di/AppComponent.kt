@@ -7,7 +7,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 
 
-@Component(modules = [ActivityBuilder::class, AndroidSupportInjectionModule::class,
+@Component(modules = [ActivityBuilder::class, FragmentBuilder::class, AndroidSupportInjectionModule::class,
     PreferencesModule::class, NetworkErrorHandlerModule::class])
 interface AppComponent : AndroidInjector<SampleMVVMApplication> {
 

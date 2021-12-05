@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
 import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
+import com.example.sampleappmvvm.articlesList.view.ArticlesListFragment
+import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
 import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.NetworkErrorHandler
@@ -48,5 +50,10 @@ class MainModule {
     @Provides
     fun provideHttpClient(): ApiManager {
         return ApiManager()
+    }
+
+    @Provides
+    fun provideOnArticleClickListener(listener: ArticlesListFragment): OnArticleClickListener {
+        return listener
     }
 }

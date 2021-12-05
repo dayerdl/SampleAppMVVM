@@ -29,7 +29,7 @@ class LoginFragment : DaggerFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginScreen(loginViewModel::onLoginClicked)
+                LoginScreen(loginViewModel::onLoginClicked, loginViewModel.viewModelData)
             }
         }
     }

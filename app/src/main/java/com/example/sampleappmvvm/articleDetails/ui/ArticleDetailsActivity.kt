@@ -25,7 +25,10 @@ class ArticleDetailsActivity : DaggerAppCompatActivity() {
 
         intent.extras?.getInt(ITEM_KEY)?.let { id ->
             setContent {
-                ArticleDetailView(viewModel = viewModel, backHandler = { finish() })
+                ArticleDetailView(
+                    state = viewModel.viewModelData,
+                    backHandler = { finish() },
+                    onClickFavourite = viewModel::saveFavorite )
             }
             viewModel.loadDetails(id)
         }

@@ -10,9 +10,14 @@ import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.server.NetworkErrors
 import kotlinx.coroutines.launch
 
+interface OnArticleClickListener {
+    fun onItemClickListener(id: Int)
+}
+
 open class ArticlesListViewModel(
     private val repository: ArticlesRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val onItemClickListener: OnArticleClickListener
 ) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<State>()
@@ -21,6 +26,7 @@ open class ArticlesListViewModel(
     fun loadArticles() {
         authRepository.getToken()?.let {
             viewModelScope.launch {
+                mutableLiveData.value = State.Loading
                 val result = repository.loadArticles(it)
                 result.fold(onSuccess = {
                     mutableLiveData.value = State.Loaded(it)
@@ -38,9 +44,8 @@ open class ArticlesListViewModel(
         }
     }
 
-    fun itemClick(article: ArticleListItem): () -> Unit = {
-        println("article clicked ${article.id}")
-        mutableLiveData.value = State.ItemClick(article)
+    fun itemClick(article: ArticleListItem) {
+        onItemClickListener.onItemClickListener(article.id)
     }
 
     fun logOut() {
@@ -50,6 +55,6 @@ open class ArticlesListViewModel(
     sealed class State {
         object NoAuth : State()
         class Loaded(val articles: List<ArticleListItem>) : State()
-        class ItemClick(val item: ArticleListItem) : State()
+        object Loading : State()
     }
 }

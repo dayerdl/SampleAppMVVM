@@ -10,12 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
 import com.example.sampleappmvvm.articlesList.di.ArticlesListViewModelProviderFactory
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
+import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
 import com.example.sampleappmvvm.login.ui.LoginActivity
 import com.example.sampleappmvvm.login.ui.LoginActivity.Companion.LOGOUT
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class ArticlesListFragment : DaggerFragment() {
+class ArticlesListFragment : DaggerFragment(), OnArticleClickListener {
 
     private lateinit var viewModel: ArticlesListViewModel
 
@@ -29,7 +30,7 @@ class ArticlesListFragment : DaggerFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ArticlesList(viewModel = viewModel, logout())
+                ArticlesList(state = viewModel.viewModelData, logout(), viewModel::itemClick)
             }
         }
     }
@@ -43,21 +44,8 @@ class ArticlesListFragment : DaggerFragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.loadArticles()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, factory)[ArticlesListViewModel::class.java]
-        viewModel.loadArticles()
-
         viewModel.viewModelData.observe(requireActivity(), { state ->
             when (state) {
-                is ArticlesListViewModel.State.ItemClick -> {
-                    val intent = Intent(requireContext(), ArticleDetailsActivity::class.java)
-                    intent.apply { putExtra(ArticleDetailsActivity.ITEM_KEY, state.item.id) }
-                    startActivity(intent)
-                }
                 is ArticlesListViewModel.State.NoAuth -> {
                     val intent = Intent(requireContext(), LoginActivity::class.java)
                     intent.putExtra(LOGOUT, true)
@@ -66,5 +54,17 @@ class ArticlesListFragment : DaggerFragment() {
                 is ArticlesListViewModel.State.Loaded -> {}
             }
         })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, factory)[ArticlesListViewModel::class.java]
+        viewModel.loadArticles()
+    }
+
+    override fun onItemClickListener(id: Int) {
+        val intent = Intent(requireContext(), ArticleDetailsActivity::class.java)
+        intent.apply { putExtra(ArticleDetailsActivity.ITEM_KEY, id) }
+        startActivity(intent)
     }
 }
