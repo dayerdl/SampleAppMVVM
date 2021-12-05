@@ -16,8 +16,7 @@ import kotlinx.coroutines.launch
 
 class ArticleDetailsViewModel(
     private val repository: ArticleDetailsRepository,
-    private val authRepository: AuthRepository,
-    private val cache: ArticlesCache
+    private val authRepository: AuthRepository
 ) : ViewModel() {
     private val mutableLiveData = MutableLiveData<State>()
     val viewModelData: LiveData<State> by lazy { mutableLiveData }
@@ -55,11 +54,11 @@ class ArticleDetailsViewModel(
     fun saveFavorite(articleListItem: ArticleDetails) {
         viewModelScope.launch {
             val local = ArticleLocal(articleListItem.id, articleListItem.title)
-            val isFavourite = cache.isArticleFavourite(articleId = articleListItem.id)
+            val isFavourite = repository.isArticleFavourite(articleId = articleListItem.id)
             if (isFavourite) {
-                cache.deleteFavourite(local)
+                repository.deleteFavourite(local)
             } else {
-                cache.saveFavourite(local)
+                repository.saveFavourite(local)
             }
             val article = ArticleDetailsModelView(articleListItem, !isFavourite)
             mutableLiveData.value = State.Loaded(article)

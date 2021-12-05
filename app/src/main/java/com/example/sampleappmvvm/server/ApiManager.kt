@@ -38,15 +38,6 @@ class ApiManager @Inject constructor() {
                 return chain.proceed(newRequest)
             }
         }
-//        val unauthorizedInterceptor = object : Interceptor {
-//            override fun intercept(chain: Interceptor.Chain): Response {
-//                val response = chain.proceed(chain.request())
-//                if (response.code === 401) {
-//
-//                }
-//                return response
-//            }
-//        }
 
         val client = OkHttpClient.Builder()
             .addInterceptor(interceptor)

@@ -12,12 +12,11 @@ import javax.inject.Inject
 
 class ArticleDetailsViewModelProviderFactory @Inject constructor(
     private val articlesRepository: ArticleDetailsRepository,
-    private val repository: AuthRepository,
-    private val cache: ArticlesCache
+    private val repository: AuthRepository
 ) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ArticleDetailsViewModel(articlesRepository, repository, cache) as T
+        return ArticleDetailsViewModel(articlesRepository, repository) as T
     }
 }

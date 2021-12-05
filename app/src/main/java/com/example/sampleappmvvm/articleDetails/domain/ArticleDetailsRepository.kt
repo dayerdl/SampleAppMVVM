@@ -1,5 +1,6 @@
 package com.example.sampleappmvvm.articleDetails.domain
 
+import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.ArticleDetails
@@ -21,5 +22,13 @@ class ArticleDetailsRepository(
 
     suspend fun isArticleFavourite(articleId: Int): Boolean {
         return cache.isArticleFavourite(articleId)
+    }
+
+    suspend fun deleteFavourite(article: ArticleLocal) {
+        cache.deleteFavourite(article)
+    }
+
+    suspend fun saveFavourite(article: ArticleLocal) {
+        cache.saveFavourite(article)
     }
 }
