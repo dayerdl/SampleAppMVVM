@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleappmvvm.articleDetails.database.ArticleLocal
-import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.domain.ArticleDetailsRepository
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsModelView
 import com.example.sampleappmvvm.login.AuthRepository
@@ -43,7 +42,6 @@ class ArticleDetailsViewModel(
                         }
                     }
                 })
-
             }
 
         } ?: run {

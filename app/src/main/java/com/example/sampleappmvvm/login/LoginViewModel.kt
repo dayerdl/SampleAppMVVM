@@ -1,13 +1,11 @@
 package com.example.sampleappmvvm.login
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.server.NetworkErrors
 import com.example.sampleappmvvm.server.TokenRequest
 import kotlinx.coroutines.launch

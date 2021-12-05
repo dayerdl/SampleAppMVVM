@@ -3,7 +3,6 @@ package com.example.sampleappmvvm.articlesList.domain
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.server.NetworkErrorHandler
-import retrofit2.HttpException
 
 class ArticlesRepository(private val apiManager: ApiManager, private val errorHandler: NetworkErrorHandler) {
 

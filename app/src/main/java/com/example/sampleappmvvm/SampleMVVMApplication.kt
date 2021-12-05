@@ -1,8 +1,5 @@
 package com.example.sampleappmvvm
 
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
-import androidx.security.crypto.MasterKeys
 import com.example.sampleappmvvm.di.AppComponent
 import com.example.sampleappmvvm.di.DaggerAppComponent
 import dagger.android.DaggerApplication

@@ -9,7 +9,6 @@ import androidx.security.crypto.MasterKeys
 import com.example.sampleappmvvm.SampleMVVMApplication
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
 
 @Module
 class PreferencesModule {
