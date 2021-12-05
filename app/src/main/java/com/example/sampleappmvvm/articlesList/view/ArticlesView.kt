@@ -13,6 +13,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +25,7 @@ import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.views.CircularProgressBar
+import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ArticlesList(
@@ -85,9 +89,11 @@ fun ArticleRow(article: ArticleListItem, itemClick: () -> Unit) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "article image", Modifier.size(50.dp)
+            GlideImage(
+                imageModel = article.thumbnail_url,
+                contentScale = ContentScale.FillBounds,
+                placeHolder = ImageBitmap.imageResource(R.drawable.placeholder),
+                modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = article.date, fontSize = 10.sp)
