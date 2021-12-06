@@ -2,8 +2,8 @@ package com.example.sampleappmvvm.login.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.login.LoginViewModel
+import com.example.sampleappmvvm.login.repository.AuthRepository
 import javax.inject.Inject
 
 class LoginViewModelProviderFactory @Inject constructor(

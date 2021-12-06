@@ -2,11 +2,11 @@ package com.example.sampleappmvvm
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
 class CoroutinesTestRule(

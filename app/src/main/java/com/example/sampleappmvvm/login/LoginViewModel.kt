@@ -43,7 +43,7 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository,
                 })
 
             } catch (e: Exception) {
-                println(e)
+                mutableLiveData.value = State.TechnicalError
             }
         }
     }

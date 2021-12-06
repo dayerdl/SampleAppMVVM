@@ -129,7 +129,16 @@ fun ArticleDetails(details: ArticleDetails) {
 @Preview
 @Composable
 fun ArticleDetailPreview() {
-    val detail = ArticleDetails(
+    val detail = getMockArticleDetails()
+
+    val mockDetails =
+        ArticleDetailsViewModel.State.Loaded(ArticleDetailsModelView(detail, false))
+    ArticleDetailsBody(mockDetails)
+
+}
+
+fun getMockArticleDetails(): ArticleDetails {
+    return ArticleDetails(
         title = "This is a tile",
         summary = getMockText(),
         date = "",
@@ -140,11 +149,6 @@ fun ArticleDetailPreview() {
         image_url = "",
         source_url = ""
     )
-
-    val mockDetails =
-        ArticleDetailsViewModel.State.Loaded(ArticleDetailsModelView(detail, false))
-    ArticleDetailsBody(mockDetails)
-
 }
 
 fun getMockText(): String {

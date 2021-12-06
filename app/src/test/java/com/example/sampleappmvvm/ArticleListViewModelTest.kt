@@ -44,7 +44,7 @@ class ArticleListViewModelTest {
     }
 
     @Test
-    fun `when loading articles successfully the articles are loaded correctly`() {
+    fun `When loading articles successfully the state is updated correctly`() {
         val token = "mockToken"
         val listArticles = getMockArticles()
         val result = CustomResult.Success(listArticles)
@@ -61,7 +61,7 @@ class ArticleListViewModelTest {
     }
 
     @Test
-    fun `verify the loading state is called while loading articles`(){
+    fun `Verify the loading state is called while loading articles`(){
         coroutinesTestRule.testDispatcher.runBlockingTest {
             val observer = mockk<Observer<ArticlesListViewModel.State>>()
             val slot = slot<ArticlesListViewModel.State>()
@@ -77,9 +77,8 @@ class ArticleListViewModelTest {
 
 
     @Test
-    fun `when token is not present the state is updated to NoAuth`() {
+    fun `When token is not present the state is updated to NoAuth`() {
         every { authRepository.getToken() }.returns(null)
-
         coroutinesTestRule.testDispatcher.runBlockingTest {
             assert(listViewModel.viewModelData.value is ArticlesListViewModel.State.NoAuth)
         }
@@ -91,5 +90,4 @@ class ArticleListViewModelTest {
         listViewModel.itemClick(article)
         verify { listener.onItemClickListener(127) }
     }
-
 }
