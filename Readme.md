@@ -8,6 +8,7 @@ Architecture:
 - Structure of features by packages. Each feature contains follows separation of concerns:
   - UI: Contain the views
   - ViewModels
+  - Repository
   - DI: Dependencies for Dagger Modules
 
 - DataBase: Store the favourite articles using Room.
