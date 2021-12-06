@@ -6,7 +6,6 @@ Architecture:
 - Use of MVVM
 
 - Structure of features by packages. Each feature contains follows separation of concerns:
-  - Domain: Package for the business logic in the app
   - UI: Contain the views
   - ViewModels
   - DI: Dependencies for Dagger Modules
