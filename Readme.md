@@ -6,8 +6,8 @@ Architecture:
 - Use of MVVM
 
 - Structure of features by packages. Each feature contains follows separation of concerns:
-  - UI: Contain the views
-  - ViewModels
+  - UI: Contain the views -> Use of Compose to represent the views
+  - ViewModels -> Use of Android viewmodel and Livedata to bind the views.
   - Repository
   - DI: Dependencies for Dagger Modules
 
