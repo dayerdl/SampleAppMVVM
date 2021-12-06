@@ -16,12 +16,16 @@ import kotlinx.coroutines.launch
 
 class ArticleDetailsViewModel(
     private val repository: ArticleDetailsRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val articleId: Int
 ) : ViewModel() {
     private val mutableLiveData = MutableLiveData<State>()
-    val viewModelData: LiveData<State> by lazy { mutableLiveData }
+    val viewModelData: LiveData<State> by lazy {
+        loadDetails(articleId)
+        mutableLiveData
+    }
 
-    fun loadDetails(articleId: Int) {
+    private fun loadDetails(articleId: Int) {
         authRepository.getToken()?.let { token ->
             viewModelScope.launch(Dispatchers.Main) {
                 mutableLiveData.value = State.Loading

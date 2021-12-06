@@ -8,7 +8,11 @@ import com.example.sampleappmvvm.articleDetails.viewmodel.ArticleDetailsViewMode
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class ArticleDetailsActivity : DaggerAppCompatActivity() {
+interface HasArticleId {
+    fun getArticleId(): Int
+}
+
+class ArticleDetailsActivity : DaggerAppCompatActivity(), HasArticleId {
 
     private lateinit var viewModel: ArticleDetailsViewModel
 
@@ -21,16 +25,20 @@ class ArticleDetailsActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel = ViewModelProvider(this, factory)[ArticleDetailsViewModel::class.java]
 
-        intent.extras?.getInt(ITEM_KEY)?.let { id ->
-            setContent {
-                ArticleDetailView(
-                    state = viewModel.viewModelData,
-                    backHandler = { finish() },
-                    onClickFavourite = viewModel::saveFavorite )
-            }
-            viewModel.loadDetails(id)
+        setContent {
+            ArticleDetailView(
+                state = viewModel.viewModelData,
+                backHandler = { finish() },
+                onClickFavourite = viewModel::saveFavorite
+            )
         }
     }
+
+    override fun getArticleId(): Int {
+        return intent.extras?.getInt(ITEM_KEY) ?: run { return 0 }
+    }
+
 }

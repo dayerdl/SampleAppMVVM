@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.SharedPreferences
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
+import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
+import com.example.sampleappmvvm.articleDetails.ui.HasArticleId
 import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
 import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
@@ -62,5 +64,10 @@ class MainModule {
     @Provides
     fun provideOnTokenStoredListener(listener: LoginFragment): OnTokenStored {
         return listener
+    }
+
+    @Provides
+    fun provideArticleProvider(provider: ArticleDetailsActivity) : HasArticleId {
+        return provider
     }
 }
