@@ -7,12 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleappmvvm.login.repository.AuthRepository
+import com.example.sampleappmvvm.login.ui.OnTokenStored
 import com.example.sampleappmvvm.server.NetworkErrors
 import com.example.sampleappmvvm.server.TokenRequest
+import com.example.sampleappmvvm.utils.fold
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val repository: AuthRepository, private val listener: OnTokenStored) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<State>()
 
@@ -27,7 +29,7 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
                 val response = repository.generateToken(request)
                 response.fold(onSuccess = {
                     repository.storeToken(token = it.access_token)
-                    mutableLiveData.value = State.TokenStored
+                    listener.onTokenStored()
                 }, onFailure = {
                     when (it) {
                         is NetworkErrors.IncorrectCredentials -> {
@@ -47,7 +49,6 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository)
     }
 
     sealed class State {
-        object TokenStored : State()
         object IncorrectCredentials : State()
         object TechnicalError : State()
         object Loading: State()

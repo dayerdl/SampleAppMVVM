@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Light
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,7 +60,7 @@ fun TopBarArticleDetails(
 ) {
 
     TopAppBar(
-        title = { Text(text = "Article Details") },
+        title = { Text(text = stringResource(R.string.article_details_title)) },
         navigationIcon = {
             IconButton(onClick = { backHandler() }) {
                 Icon(Icons.Filled.ArrowBack, "backIcon")

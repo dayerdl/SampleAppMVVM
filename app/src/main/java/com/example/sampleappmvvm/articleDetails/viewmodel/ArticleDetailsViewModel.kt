@@ -10,6 +10,7 @@ import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsModelView
 import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.ArticleDetails
 import com.example.sampleappmvvm.server.NetworkErrors
+import com.example.sampleappmvvm.utils.fold
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

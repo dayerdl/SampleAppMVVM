@@ -10,12 +10,17 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
+import com.example.sampleappmvvm.R
 import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.login.LoginViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+interface OnTokenStored {
+    fun onTokenStored()
+}
+
+class LoginFragment : DaggerFragment(), OnTokenStored {
 
     private lateinit var loginViewModel: LoginViewModel
 
@@ -41,24 +46,25 @@ class LoginFragment : DaggerFragment() {
 
         loginViewModel.viewModelData.observe(viewLifecycleOwner, { state ->
             when (state) {
-                LoginViewModel.State.TokenStored -> {
-                    val intent = Intent(requireContext(), ArticlesListActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
                 LoginViewModel.State.IncorrectCredentials -> Toast.makeText(
                     requireContext(),
-                    "Incorrect username and password",
+                    getString(R.string.incorrect_user_name_password_message),
                     Toast.LENGTH_LONG
                 ).show()
                 LoginViewModel.State.TechnicalError -> Toast.makeText(
                     requireContext(),
-                    "There is technical problem, please contact technical support",
+                    getString(R.string.technical_error),
                     Toast.LENGTH_LONG
                 ).show()
+                else -> {}
             }
         })
+    }
 
+    override fun onTokenStored() {
+        val intent = Intent(requireContext(), ArticlesListActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
 }

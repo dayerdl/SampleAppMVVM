@@ -22,9 +22,12 @@ open class ArticlesListViewModel(
 ) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<State>()
-    val viewModelData: LiveData<State> by lazy { mutableLiveData }
+    val viewModelData: LiveData<State> by lazy {
+        loadArticles()
+        mutableLiveData
+    }
 
-    fun loadArticles() {
+    private fun loadArticles() {
         authRepository.getToken()?.let {
             viewModelScope.launch {
                 mutableLiveData.value = State.Loading

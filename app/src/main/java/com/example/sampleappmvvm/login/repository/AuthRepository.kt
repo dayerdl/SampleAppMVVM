@@ -8,6 +8,7 @@ import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.NetworkErrorHandler
 import com.example.sampleappmvvm.server.TokenRequest
 import com.example.sampleappmvvm.server.TokenResponse
+import com.example.sampleappmvvm.utils.CustomResult
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
@@ -19,11 +20,11 @@ class AuthRepository @Inject constructor(
         const val KEY_TOKEN = "TOKEN"
     }
 
-    suspend fun generateToken(request: TokenRequest): Result<TokenResponse> {
+    suspend fun generateToken(request: TokenRequest): CustomResult<TokenResponse> {
         return try {
-            Result.success(apiManager.provideNoAuthClient().getToken(request))
+            CustomResult.Success(apiManager.provideNoAuthClient().getToken(request))
         } catch (e: Exception) {
-            Result.failure(errorHandler.handleError(e))
+            CustomResult.Failure(errorHandler.handleError(e))
         }
     }
 

@@ -52,7 +52,6 @@ class ArticleListViewModelTest {
         coEvery { articlesRepository.loadArticles(token) } returns result
 
         coroutinesTestRule.testDispatcher.runBlockingTest {
-            listViewModel.loadArticles()
             listViewModel.viewModelData.value?.let { it ->
                 if (it is ArticlesListViewModel.State.Loaded) {
                     assert(it.articles == listArticles)
@@ -67,11 +66,11 @@ class ArticleListViewModelTest {
             val observer = mockk<Observer<ArticlesListViewModel.State>>()
             val slot = slot<ArticlesListViewModel.State>()
             val list = arrayListOf<ArticlesListViewModel.State>()
-            listViewModel.viewModelData.observeForever(observer)
+
             every { observer.onChanged(capture(slot)) } answers {
                 list.add(slot.captured)
             }
-            listViewModel.loadArticles()
+            listViewModel.viewModelData.observeForever(observer)
             verify { observer.onChanged(ArticlesListViewModel.State.Loading) }
         }
     }
@@ -82,7 +81,6 @@ class ArticleListViewModelTest {
         every { authRepository.getToken() }.returns(null)
 
         coroutinesTestRule.testDispatcher.runBlockingTest {
-            listViewModel.loadArticles()
             assert(listViewModel.viewModelData.value is ArticlesListViewModel.State.NoAuth)
         }
     }
@@ -91,7 +89,7 @@ class ArticleListViewModelTest {
     fun `When I click on an item the listener is called passing the correct article id`(){
         val article = getMockArticles()[0]
         listViewModel.itemClick(article)
-        verify { listener.onItemClickListener(128) }
+        verify { listener.onItemClickListener(127) }
     }
 
 }

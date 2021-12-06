@@ -5,9 +5,11 @@ import android.content.SharedPreferences
 import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsRepository
 import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
-import com.example.sampleappmvvm.articlesList.view.ArticlesListFragment
+import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
 import com.example.sampleappmvvm.login.repository.AuthRepository
+import com.example.sampleappmvvm.login.ui.LoginFragment
+import com.example.sampleappmvvm.login.ui.OnTokenStored
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.NetworkErrorHandler
 import dagger.Module
@@ -53,7 +55,12 @@ class MainModule {
     }
 
     @Provides
-    fun provideOnArticleClickListener(listener: ArticlesListFragment): OnArticleClickListener {
+    fun provideOnArticleClickListener(listener: ArticlesListActivity): OnArticleClickListener {
+        return listener
+    }
+
+    @Provides
+    fun provideOnTokenStoredListener(listener: LoginFragment): OnTokenStored {
         return listener
     }
 }

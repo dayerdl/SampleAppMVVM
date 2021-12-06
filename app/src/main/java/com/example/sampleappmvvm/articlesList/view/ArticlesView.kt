@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,7 +41,7 @@ fun ArticlesList(
 
     Scaffold(topBar = {
         TopAppBar(
-            title = { Text(text = "Articles") },
+            title = { Text(text = stringResource(R.string.title_article_list)) },
             actions = {
                 Icon(
                     Icons.Filled.MoreVert, "Log Out",
@@ -54,7 +55,7 @@ fun ArticlesList(
                     onDismissRequest = { showMenu = false }
                 ) {
                     DropdownMenuItem(onClick = { logout() }) {
-                        Text(text = "Log out")
+                        Text(text = stringResource(R.string.log_out_menu))
                     }
                 }
             }

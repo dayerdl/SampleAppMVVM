@@ -5,6 +5,7 @@ import com.example.sampleappmvvm.articleDetails.database.ArticlesCache
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.ArticleDetails
 import com.example.sampleappmvvm.server.NetworkErrorHandler
+import com.example.sampleappmvvm.utils.CustomResult
 
 class ArticleDetailsRepository(
     private val apiManager: ApiManager,
@@ -12,11 +13,11 @@ class ArticleDetailsRepository(
     private val cache: ArticlesCache
 ) {
 
-    suspend fun loadArticleDetails(articleId: Int, token: String): Result<ArticleDetails> {
+    suspend fun loadArticleDetails(articleId: Int, token: String): CustomResult<ArticleDetails> {
         return try {
-            Result.success(apiManager.provideAuthClient(token).getArticleDetails(articleId))
+            CustomResult.Success(apiManager.provideAuthClient(token).getArticleDetails(articleId))
         } catch (e: Exception) {
-            Result.failure(errorHandler.handleError(e))
+            CustomResult.Failure(errorHandler.handleError(e))
         }
     }
 
