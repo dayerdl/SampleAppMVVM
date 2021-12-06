@@ -8,6 +8,7 @@ import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
 import com.example.sampleappmvvm.login.repository.AuthRepository
 import com.example.sampleappmvvm.server.ArticleListItem
 import com.example.sampleappmvvm.server.NetworkErrors
+import com.example.sampleappmvvm.utils.fold
 import kotlinx.coroutines.launch
 
 interface OnArticleClickListener {
@@ -48,7 +49,7 @@ open class ArticlesListViewModel(
         onItemClickListener.onItemClickListener(article.id)
     }
 
-    fun logOut() {
+    fun onLogOutClicked() {
         authRepository.logOut()
     }
 

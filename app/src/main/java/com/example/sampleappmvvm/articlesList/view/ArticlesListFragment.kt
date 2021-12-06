@@ -36,7 +36,7 @@ class ArticlesListFragment : DaggerFragment(), OnArticleClickListener {
     }
 
     private fun logout(): () -> Unit = {
-        viewModel.logOut()
+        viewModel.onLogOutClicked()
         activity?.finish()
         val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)

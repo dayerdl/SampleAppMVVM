@@ -45,6 +45,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+        
     }
 }
 
@@ -72,8 +73,11 @@ dependencies {
     api 'com.google.dagger:dagger-android-support:2.38.1'
     kapt 'com.google.dagger:dagger-android-processor:2.38.1'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2'
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -97,7 +101,7 @@ dependencies {
     // Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
     // Live data
-    implementation 'androidx.compose.runtime:runtime-livedata:1.0.1'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.5'
     // UI Tests
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
 
