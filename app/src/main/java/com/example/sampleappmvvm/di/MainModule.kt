@@ -7,11 +7,9 @@ import com.example.sampleappmvvm.articleDetails.repository.ArticleDetailsReposit
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
 import com.example.sampleappmvvm.articleDetails.ui.HasArticleId
 import com.example.sampleappmvvm.articlesList.repository.ArticlesRepository
-import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
-import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
 import com.example.sampleappmvvm.login.repository.AuthRepository
-import com.example.sampleappmvvm.login.ui.LoginFragment
-import com.example.sampleappmvvm.login.ui.OnTokenStored
+import com.example.sampleappmvvm.login.ui.Loggable
+import com.example.sampleappmvvm.login.ui.LoginActivity
 import com.example.sampleappmvvm.server.ApiManager
 import com.example.sampleappmvvm.server.NetworkErrorHandler
 import dagger.Module
@@ -58,6 +56,11 @@ class MainModule {
 
     @Provides
     fun provideArticleProvider(provider: ArticleDetailsActivity) : HasArticleId {
+        return provider
+    }
+
+    @Provides
+    fun provideShouldLogout(provider: LoginActivity): Loggable {
         return provider
     }
 }
