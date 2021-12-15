@@ -29,15 +29,12 @@ class LoginViewModelTest {
     @MockK
     lateinit var authRepository: AuthRepository
 
-    @MockK
-    lateinit var listener: OnTokenStored
-
     private lateinit var viewModel: LoginViewModel
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxed = true)
-        viewModel = LoginViewModel(authRepository, listener)
+        viewModel = LoginViewModel(authRepository)
     }
 
     @Test
@@ -51,7 +48,6 @@ class LoginViewModelTest {
         coroutinesTestRule.testDispatcher.runBlockingTest {
             viewModel.onLoginClicked(user, pass)
             verify { authRepository.storeToken("access") }
-            verify { listener.onTokenStored() }
         }
     }
 

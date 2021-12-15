@@ -40,7 +40,7 @@ class ArticleListViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxed = true)
-        listViewModel = ArticlesListViewModel(articlesRepository, authRepository, listener)
+        listViewModel = ArticlesListViewModel(articlesRepository, authRepository)
     }
 
     @Test
