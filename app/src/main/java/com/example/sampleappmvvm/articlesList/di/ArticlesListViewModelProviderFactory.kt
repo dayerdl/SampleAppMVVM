@@ -10,12 +10,11 @@ import javax.inject.Inject
 
 class ArticlesListViewModelProviderFactory @Inject constructor(
     private val articlesRepository: ArticlesRepository,
-    private val repository: AuthRepository,
-    private val articleClickListener: OnArticleClickListener
+    private val repository: AuthRepository
 ) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ArticlesListViewModel(articlesRepository, repository, articleClickListener) as T
+        return ArticlesListViewModel(articlesRepository, repository) as T
     }
 }

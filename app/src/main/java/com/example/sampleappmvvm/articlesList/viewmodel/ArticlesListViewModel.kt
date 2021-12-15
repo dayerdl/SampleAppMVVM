@@ -17,9 +17,10 @@ interface OnArticleClickListener {
 
 open class ArticlesListViewModel(
     private val repository: ArticlesRepository,
-    private val authRepository: AuthRepository,
-    private val onItemClickListener: OnArticleClickListener
+    private val authRepository: AuthRepository
 ) : ViewModel() {
+
+    private var listener: OnArticleClickListener? = null
 
     private val mutableLiveData = MutableLiveData<State>()
     val viewModelData: LiveData<State> by lazy {
@@ -48,8 +49,16 @@ open class ArticlesListViewModel(
         }
     }
 
+    fun registerOnClickListener(onArticleClickListener: OnArticleClickListener) {
+        listener = onArticleClickListener
+    }
+
+    fun unregisterOnClickListener(){
+        listener = null
+    }
+
     fun itemClick(article: ArticleListItem) {
-        onItemClickListener.onItemClickListener(article.id)
+        listener?.onItemClickListener(article.id)
     }
 
     fun onLogOutClicked() {

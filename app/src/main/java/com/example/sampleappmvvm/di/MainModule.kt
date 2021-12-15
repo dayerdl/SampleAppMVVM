@@ -57,16 +57,6 @@ class MainModule {
     }
 
     @Provides
-    fun provideOnArticleClickListener(listener: ArticlesListActivity): OnArticleClickListener {
-        return listener
-    }
-
-    @Provides
-    fun provideOnTokenStoredListener(listener: LoginFragment): OnTokenStored {
-        return listener
-    }
-
-    @Provides
     fun provideArticleProvider(provider: ArticleDetailsActivity) : HasArticleId {
         return provider
     }

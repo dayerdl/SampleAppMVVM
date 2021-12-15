@@ -14,11 +14,13 @@ import com.example.sampleappmvvm.utils.fold
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val repository: AuthRepository, private val listener: OnTokenStored) : ViewModel() {
+class LoginViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
 
     private val mutableLiveData = MutableLiveData<State>()
 
     val viewModelData: LiveData<State> by lazy { mutableLiveData }
+
+    private var listener: OnTokenStored? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun onLoginClicked(user: String, password: String) {
@@ -29,7 +31,7 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository,
                 val response = repository.generateToken(request)
                 response.fold(onSuccess = {
                     repository.storeToken(token = it.access_token)
-                    listener.onTokenStored()
+                    listener?.onTokenStored()
                 }, onFailure = {
                     when (it) {
                         is NetworkErrors.IncorrectCredentials -> {
@@ -46,6 +48,14 @@ class LoginViewModel @Inject constructor(private val repository: AuthRepository,
                 mutableLiveData.value = State.TechnicalError
             }
         }
+    }
+
+    fun registerListener(onTokenStoredListener: OnTokenStored){
+        this.listener = onTokenStoredListener
+    }
+
+    fun unregisterListener(){
+        listener = null
     }
 
     sealed class State {

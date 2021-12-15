@@ -9,6 +9,7 @@ import com.example.sampleappmvvm.articlesList.di.ArticlesListViewModelProviderFa
 import com.example.sampleappmvvm.articlesList.viewmodel.ArticlesListViewModel
 import com.example.sampleappmvvm.articlesList.viewmodel.OnArticleClickListener
 import com.example.sampleappmvvm.login.ui.LoginActivity
+import com.example.sampleappmvvm.views.CircularProgressBar
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -48,6 +49,12 @@ class ArticlesListActivity : DaggerAppCompatActivity(), OnArticleClickListener {
                 is ArticlesListViewModel.State.Loaded -> {}
             }
         })
+        viewModel.registerOnClickListener(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.unregisterOnClickListener()
     }
 
     override fun onItemClickListener(id: Int) {
