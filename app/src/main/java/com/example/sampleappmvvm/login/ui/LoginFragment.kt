@@ -62,8 +62,8 @@ class LoginFragment : DaggerFragment(), OnTokenStored {
         loginViewModel.registerListener(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         loginViewModel.unregisterListener()
     }
 

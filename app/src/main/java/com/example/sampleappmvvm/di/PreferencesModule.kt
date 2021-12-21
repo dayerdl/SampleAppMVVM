@@ -9,6 +9,7 @@ import androidx.security.crypto.MasterKeys
 import com.example.sampleappmvvm.SampleMVVMApplication
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
 class PreferencesModule {
@@ -18,6 +19,7 @@ class PreferencesModule {
         return application
     }
 
+    @Singleton
     @Provides
     fun provideSharedPreferences(application: SampleMVVMApplication): SharedPreferences {
         return EncryptedSharedPreferences.create(

@@ -5,8 +5,9 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
-
+@Singleton
 @Component(modules = [ActivityBuilder::class, FragmentBuilder::class, AndroidSupportInjectionModule::class,
     PreferencesModule::class, NetworkErrorHandlerModule::class])
 interface AppComponent : AndroidInjector<SampleMVVMApplication> {
