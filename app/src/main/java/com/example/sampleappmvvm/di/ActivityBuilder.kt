@@ -1,5 +1,6 @@
 package com.example.sampleappmvvm.di
 
+import com.example.sampleappmvvm.RxJavaActivity
 import com.example.sampleappmvvm.articleDetails.ui.ArticleDetailsActivity
 import com.example.sampleappmvvm.articlesList.view.ArticlesListActivity
 import com.example.sampleappmvvm.login.ui.LoginActivity
@@ -16,5 +17,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [MainModule::class])
     abstract fun bindArticleDetailsActivity(): ArticleDetailsActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindRxJavaActivity(): RxJavaActivity
 
 }
