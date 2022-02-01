@@ -1,4 +1,4 @@
-Definition: Rest Client to display Articles from API of Future Workshop
+Definition: Rest Client to display Articles from a Rest API
 
 Architecture:
 - Use of MVVM
